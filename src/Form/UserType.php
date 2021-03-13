@@ -2,32 +2,39 @@
 
 namespace App\Form;
 
-use App\Entity\Category;
-use App\Entity\Post;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
 
-class PostType extends AbstractType
+class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, [
+            ->add('firstname', TextType::class, [
+                'label' => "Prénom",
+                'required' => true,
+                'attr' => [
+                    'placeholder' => "Merci de saisir un prénom."
+                ]
+            ])
+            ->add('lastname', TextType::class, [
                 'label' => "Nom",
                 'required' => true,
                 'attr' => [
-                    'placeholder' => "Merci de saisir le nom de l'article."
+                    'placeholder' => "Merci de saisir un nom."
                 ]
             ])
             ->add('file', FileType::class, [
-                'label' => "Image",
+                'label' => "Photo",
                 'required' => true,
                 'mapped' => false,
                 'constraints' => [
@@ -35,30 +42,34 @@ class PostType extends AbstractType
                         'mimeTypes' => ['image/gif', 'image/png', 'image/jpeg', 'image/bmp', 'image/webp', 'image/svg+xml'],
                         'mimeTypesMessage' => "Le fichier téléchargé n'est pas dans un format image.",
                         'maxSize' => '8192k',
-                        'maxSizeMessage' => "L'image est trop lourde pour être téléchargé."
+                        'maxSizeMessage' => "La photo est trop lourde pour être téléchargé."
                     ])
                 ],
                 'attr' => [
-                    'placeholder' => "Merci de choisir l'image de l'article."
+                    'placeholder' => "Merci de choisir une photo."
                 ]
             ])
-            ->add('content', TextareaType::class, [
-                'label' => "Contenu",
+            ->add('email', EmailType::class, [
+                'label' => "Adresse e-mail",
                 'required' => true,
                 'attr' => [
-                    'placeholder' => "Merci de saisir le contenu de l'article."
+                    'placeholder' => "Merci de saisir une adresse e-mail."
                 ]
             ])
-            ->add('category', EntityType::class, [
-                'label' => 'Catégorie associé',
-                'required' => true,
-                'class' => Category::class,
+            ->add('new_password', PasswordType::class, [
+                'label' => "Mot de passe",
+                'required' => false,
+                'mapped' => false,
                 'attr' => [
-                    'placeholder' => "Merci de sélectionner la catégorie de l'article."
+                    'placeholder' => "Merci de saisir un mot de passe."
                 ]
+            ])
+            ->add('is_admin', CheckboxType::class, [
+                'label' => 'Administration',
+                'required' => false
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'Valider'
+                'label' => "Valider"
             ])
         ;
     }
@@ -66,7 +77,7 @@ class PostType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Post::class,
+            'data_class' => User::class,
         ]);
     }
 }
