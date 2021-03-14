@@ -1,0 +1,48 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Modifier mes informations{% endblock %}
+
+{% block content %}
+    <div class="mb-4">
+        <h2>Modifier mes informations</h2>
+        <a href="{{ path('account_home') }}" class="small">Retour à mon compte</a>
+        <hr />
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+        {{ form_start(form) }}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-12">
+                            {{ form_row(form.firstname) }}
+                        </div>
+                        <div class="col-md-12">
+                            {{ form_row(form.lastname) }}
+                        </div>
+                        <div class="col-md-12">
+                            {{ form_row(form.email) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-12">
+                            {{ form_row(form.old_password) }}
+                        </div>
+                        <div class="col-md-12">
+                            {{ form_row(form.new_password) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    {{ form_row(form.submit) }}
+                </div>
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

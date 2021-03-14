@@ -1,0 +1,15 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Mon compte{% endblock %}
+
+{% block content %}
+    <div class="mb-4">
+        <h2>Bonjour, {{ app.user.firstname }} !</h2>
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="" class="small">Accéder à l'administration</a>
+        {% endif %}
+        <hr />
+        <p class="small">Bienvenue dans votre espace personnel. C'est ici que vous pourrez gérer vos informations personnelles.</p>
+        <a href="{{ path('account_update') }}">Modifier mes informations</a>
+    </div>
+{% endblock %}

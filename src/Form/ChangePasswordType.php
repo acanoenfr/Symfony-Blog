@@ -33,22 +33,6 @@ class ChangePasswordType extends AbstractType
                     'placeholder' => "Merci de saisir votre nom."
                 ]
             ])
-            ->add('file', FileType::class, [
-                'label' => "Votre photo",
-                'required' => true,
-                'mapped' => false,
-                'constraints' => [
-                    new File([
-                        'mimeTypes' => ['image/gif', 'image/png', 'image/jpeg', 'image/bmp', 'image/webp', 'image/svg+xml'],
-                        'mimeTypesMessage' => "Le fichier téléchargé n'est pas dans un format image.",
-                        'maxSize' => '8192k',
-                        'maxSizeMessage' => "La photo est trop lourde pour être téléchargé."
-                    ])
-                ],
-                'attr' => [
-                    'placeholder' => "Merci de choisir votre photo."
-                ]
-            ])
             ->add('email', EmailType::class, [
                 'label' => "Votre adresse e-mail",
                 'required' => true,
@@ -83,7 +67,10 @@ class ChangePasswordType extends AbstractType
                 ]
             ])
             ->add('submit', SubmitType::class, [
-                'label' => "Mettre à jour"
+                'label' => "Mettre à jour",
+                'attr' => [
+                    'class' => 'btn btn-block btn-primary'
+                ]
             ])
         ;
     }

@@ -51,8 +51,6 @@ class User implements UserInterface
      */
     private $photo;
 
-    private $file;
-
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="user", orphanRemoval=true)
      */
@@ -218,21 +216,5 @@ class User implements UserInterface
         }
 
         return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getFile()
-    {
-        return $this->file;
-    }
-
-    /**
-     * @param mixed $file
-     */
-    public function setFile($file): void
-    {
-        $this->file = $file;
     }
 }

@@ -1,9 +1,9 @@
-{% extends 'base.html.twig' %}
+{% extends 'layouts/base.html.twig' %}
 
 {% block title %}S'inscrire{% endblock %}
 
 {% block content %}
-    <div class="row mt-5 mb-5">
+    <div class="mb-4">
         <div class="col-md-6 offset-md-3">
             {% for label, messages in app.flashes %}
                 {% for message in messages %}
