@@ -1,42 +1,38 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Se connecter{% endblock %}
 
-{% block body %}
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+{% block content %}
+    <div class="row">
+        <form class="col-md-6 offset-md-3" method="post">
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
 
-    {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
-        </div>
-    {% endif %}
+            {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" required>
+            <h1 class="h3 mb-3 font-weight-normal text-center">Connexion à mon compte</h1>
+            <hr />
+            <label for="inputEmail">Adresse e-mail</label>
+            <input type="email" value="{{ last_username }}" name="email" id="inputEmail" placeholder="Merci de saisir votre adresse e-mail." class="form-control" required autofocus>
+            <label for="inputPassword">Mot de passe</label>
+            <input type="password" name="password" id="inputPassword" placeholder="Merci de saisir votre mot de passe." class="form-control" required>
 
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            <br />
 
-    {#
-        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-        See https://symfony.com/doc/current/security/remember_me.html
-
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" name="_remember_me"> Remember me
-            </label>
-        </div>
-    #}
-
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
-</form>
+            <button class="btn btn-block btn-primary" type="submit">
+                Se connecter
+            </button>
+            <hr />
+            <p class="text-center"><a href="{{ path('app_login') }}">Mot de passe oublié</a> ?</p>
+            <p class="text-center">Ou souhaitez-vous <a href="{{ path('app_register') }}">créer un compte</a> ?</p>
+        </form>
+    </div>
 {% endblock %}

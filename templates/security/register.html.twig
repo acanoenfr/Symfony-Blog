@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}S'inscrire{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            <h1 class="h3 mb-3 font-weight-normal text-center">Création de votre compte</h1>
+            <hr />
+            {{ form_start(form) }}
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form_row(form.firstname) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(form.lastname) }}
+                    </div>
+                    <div class="col-md-12">
+                        {{ form_row(form.email) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(form.new_password.children['first']) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(form.new_password.children['second']) }}
+                    </div>
+                </div>
+                {{ form_row(form.submit) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
