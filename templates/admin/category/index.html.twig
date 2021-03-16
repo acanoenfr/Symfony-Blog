@@ -1,0 +1,68 @@
+{% extends 'layouts/admin.html.twig' %}
+
+{% block title %}Catégories{% endblock %}
+
+{% block content %}
+    <!-- DataTales Categories -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <a href="{{ path('admin_category_add') }}" class="btn btn-success float-right">
+                <i class="fas fa-plus"></i> Ajouter
+            </a>
+            <h2 class="m-0 font-weight-bold text-primary">Catégories</h2>
+        </div>
+        <div class="card-body">
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Articles liés</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Articles liés</th>
+                            <th>Actions</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        {% for category in categories %}
+                            <tr>
+                                <td>{{ category.name }} <small>({{ category.slug }})</small></td>
+                                <td>{{ category.posts|length }}</td>
+                                <td>
+                                    <a href="{{ path('admin_category_edit', {id: category.id}) }}" class="btn btn-sm btn-warning">
+                                        <i class="fas fa-pencil-alt"></i> Editer
+                                    </a>
+                                    <a href="{{ path('admin_category_remove', {id: category.id}) }}" class="btn btn-sm btn-danger">
+                                        <i class="fas fa-trash-alt"></i> Supprimer
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block custom_js %}
+    <script>
+        $("#dataTable").DataTable({
+            language: {
+                url: '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json'
+            }
+        })
+    </script>
+{% endblock %}
