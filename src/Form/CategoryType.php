@@ -26,6 +26,7 @@ class CategoryType extends AbstractType
                 'label' => "Contenu",
                 'required' => false,
                 'attr' => [
+                    'id' => 'mdContent',
                     'placeholder' => "Merci de saisir le contenu de la catégorie."
                 ]
             ])

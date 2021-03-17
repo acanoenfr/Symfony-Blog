@@ -47,6 +47,7 @@ class PostType extends AbstractType
                 'label' => "Contenu",
                 'required' => true,
                 'attr' => [
+                    'id' => 'mdContent',
                     'placeholder' => "Merci de saisir le contenu de l'article."
                 ]
             ])

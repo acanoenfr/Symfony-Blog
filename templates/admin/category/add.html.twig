@@ -23,3 +23,9 @@
         </div>
     </div>
 {% endblock %}
+
+{% block custom_js %}
+    <script>
+        var simplemde = new SimpleMDE({ element: $("#mdContent")[0] })
+    </script>
+{% endblock %}

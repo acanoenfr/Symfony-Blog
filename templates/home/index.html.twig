@@ -17,7 +17,7 @@
                     <h2 class="blog-post-title">{{ lastPost[0].name }}</h2>
                     <p class="blog-post-meta">Publié le {{ lastPost[0].createdAt|date('d/m/Y') }} dans {{ lastPost[0].category.name }}</p>
 
-                    {{ lastPost[0].content|raw }}
+                    {{ lastPost[0].content|markdown_to_html }}
                 </div><!-- /.blog-post -->
             {% else %}
                 <p class="text-muted lead">Aucun article n'a été publié.</p>
