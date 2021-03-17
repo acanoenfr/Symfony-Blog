@@ -54,15 +54,18 @@ class HomeController extends AbstractController
             ->getRepository(Category::class)
             ->findAll();
 
-        $category = $this->entityManager
+        $cat = $this->entityManager
             ->getRepository(Category::class)
             ->findOneBySlug($slug);
 
-        if (!$category) {
+        if (!$cat) {
             return $this->redirectToRoute('app_home');
         }
 
-        dd($category);
+        return $this->render('home/show_category.html.twig', [
+            'categories' => $categories,
+            'cat' => $cat
+        ]);
     }
 
     /**
@@ -82,6 +85,9 @@ class HomeController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
-        dd($post);
+        return $this->render('home/show_post.html.twig', [
+            'categories' => $categories,
+            'post' => $post
+        ]);
     }
 }

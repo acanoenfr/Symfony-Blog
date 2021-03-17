@@ -1,0 +1,25 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Catégorie {{ cat.name }}{% endblock %}
+
+{% block content %}
+    <div class="mb-4">
+        <h2>{{ cat.name }}</h2>
+        <div class="text-muted lead">{{ cat.content|markdown_to_html }}</div>
+        <hr />
+        <div class="row">
+            {% for post in cat.posts %}
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="/uploads/posts/{{ post.image }}" alt="{{ post.name }}" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ post.name }}</h5>
+                            <p class="card-text text-muted">Publié le {{ post.createdAt|date('d/m/Y') }}</p>
+                            <a href="{{ path('app_post_details', {slug: post.slug}) }}" class="btn btn-primary">En savoir plus</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
