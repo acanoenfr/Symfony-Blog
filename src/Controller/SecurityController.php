@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\User;
 use App\Form\RegisterType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -29,6 +30,10 @@ class SecurityController extends AbstractController
      */
     public function register(Request $request, UserPasswordEncoderInterface $encoder): Response
     {
+        $categories = $this->entityManager
+            ->getRepository(Category::class)
+            ->findAll();
+
         $user = new User();
         $form = $this->createForm(RegisterType::class, $user);
         $form->handleRequest($request);
@@ -54,7 +59,8 @@ class SecurityController extends AbstractController
         }
 
         return $this->render('security/register.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'categories' => $categories
         ]);
     }
 
@@ -63,6 +69,10 @@ class SecurityController extends AbstractController
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
+        $categories = $this->entityManager
+            ->getRepository(Category::class)
+            ->findAll();
+
         if ($this->getUser()) {
             return $this->redirectToRoute('app_home');
         }
@@ -72,7 +82,11 @@ class SecurityController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        return $this->render('security/login.html.twig', [
+            'last_username' => $lastUsername,
+            'error' => $error,
+            'categories' => $categories
+        ]);
     }
 
     /**

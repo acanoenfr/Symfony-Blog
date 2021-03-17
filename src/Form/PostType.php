@@ -6,6 +6,7 @@ use App\Entity\Category;
 use App\Entity\Post;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -56,6 +57,11 @@ class PostType extends AbstractType
                 'attr' => [
                     'placeholder' => "Merci de sélectionner la catégorie de l'article."
                 ]
+            ])
+            ->add('isBest', CheckboxType::class, [
+                'label' => 'A la une',
+                'required' => false,
+                'value' => 0
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Valider'

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\User;
 use App\Form\ChangePasswordType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -28,7 +29,13 @@ class AccountController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('account/index.html.twig');
+        $categories = $this->entityManager
+            ->getRepository(Category::class)
+            ->findAll();
+
+        return $this->render('account/index.html.twig', [
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -36,6 +43,10 @@ class AccountController extends AbstractController
      */
     public function update(Request $request, UserPasswordEncoderInterface $encoder): Response
     {
+        $categories = $this->entityManager
+            ->getRepository(Category::class)
+            ->findAll();
+
         $user = $this->entityManager
             ->getRepository(User::class)
             ->findOneById($this->getUser()->getId());
@@ -75,7 +86,8 @@ class AccountController extends AbstractController
         }
 
         return $this->render('account/update.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'categories' => $categories
         ]);
     }
 }

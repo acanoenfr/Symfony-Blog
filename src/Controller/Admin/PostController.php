@@ -6,6 +6,7 @@ use App\Entity\Post;
 use App\Form\PostType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -52,7 +53,7 @@ class PostController extends AbstractController
             }
 
             $file = $form->get('file')->getData();
-            $newFilename = uniqid() . "{$file->guessExtension()}";
+            $newFilename = uniqid() . ".{$file->guessExtension()}";
             $post->setImage($newFilename);
             $destination = $this->getParameter('kernel.project_dir') . "/public/uploads/posts";
             $file->move($destination, $newFilename);
@@ -62,7 +63,7 @@ class PostController extends AbstractController
             $this->entityManager->persist($post);
             $this->entityManager->flush();
 
-            $this->addFlash('success', "L'article a bien été ajouté.");
+            $this->addFlash('success', "L'article a bien été ajoutée.");
             return $this->redirectToRoute('admin_post');
         }
 
@@ -74,16 +75,64 @@ class PostController extends AbstractController
     /**
      * @Route("/admin/post/{id}/edit", name="admin_post_edit")
      */
-    public function edit(Request $request): Response
+    public function edit($id, Request $request, Filesystem $filesystem): Response
     {
-        return $this->render('admin/post/edit.html.twig');
+        $post = $this->entityManager
+            ->getRepository(Post::class)
+            ->findOneById($id);
+
+        if (!$post) {
+            $this->addFlash('danger', "Article inconnu.");
+            return $this->redirectToRoute('admin_post');
+        }
+
+        $form = $this->createForm(PostType::class, $post);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $file = $form->get('file')->getData();
+            if (!empty($file)) {
+                $destination = $this->getParameter('kernel.project_dir') . "/public/uploads/posts";
+                $newFilename = uniqid() . ".{$file->guessExtension()}";
+                $filesystem->remove($destination."/{$post->getImage()}");
+                $post->setImage($newFilename);
+                $file->move($destination, $newFilename);
+            }
+
+            $this->entityManager->flush();
+
+            $this->addFlash('success', "L'article a bien été modifiée.");
+            return $this->redirectToRoute('admin_post');
+        }
+
+        return $this->render('admin/post/edit.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
     /**
      * @Route("/admin/post/{id}/remove", name="admin_post_remove")
      */
-    public function remove(): Response
+    public function remove($id, Filesystem $filesystem): Response
     {
+        $post = $this->entityManager
+            ->getRepository(Post::class)
+            ->findOneById($id);
+
+        if (!$post) {
+            $this->addFlash('danger', "Article inconnu.");
+            return $this->redirectToRoute('admin_post');
+        }
+
+        if (!empty($post->getImage())) {
+            $destination = $this->getParameter('kernel.project_dir') . "/public/uploads/posts";
+            $filesystem->remove($destination."/{$post->getImage()}");
+        }
+
+        $this->entityManager->remove($post);
+        $this->entityManager->flush();
+
+        $this->addFlash('success', "L'article a bien été supprimée.");
         return $this->redirectToRoute('admin_post');
     }
 }
