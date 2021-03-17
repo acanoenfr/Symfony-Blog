@@ -15,7 +15,8 @@
                 <div class="blog-post">
                     <img src="/uploads/posts/{{ lastPost[0].image }}" alt="{{ lastPost[0].name }}" width="100%" height="100%">
                     <h2 class="blog-post-title">{{ lastPost[0].name }}</h2>
-                    <p class="blog-post-meta">Publié le {{ lastPost[0].createdAt|date('d/m/Y') }} dans {{ lastPost[0].category.name }}</p>
+                    <p class="blog-post-meta">Publié le {{ lastPost[0].createdAt|date('d/m/Y') }} dans {{ lastPost[0].category.name }} |
+                        <a href="{{ path('app_post_details', {slug: lastPost[0].slug}) }}">Voir l'article</a></p>
 
                     {{ lastPost[0].content|markdown_to_html }}
                 </div><!-- /.blog-post -->

@@ -44,4 +44,44 @@ class HomeController extends AbstractController
             'lastPost' => $lastPost
         ]);
     }
+
+    /**
+     * @Route("/category/{slug}", name="app_category_details")
+     */
+    public function show_category($slug): Response
+    {
+        $categories = $this->entityManager
+            ->getRepository(Category::class)
+            ->findAll();
+
+        $category = $this->entityManager
+            ->getRepository(Category::class)
+            ->findOneBySlug($slug);
+
+        if (!$category) {
+            return $this->redirectToRoute('app_home');
+        }
+
+        dd($category);
+    }
+
+    /**
+     * @Route("/post/{slug}", name="app_post_details")
+     */
+    public function show_post($slug): Response
+    {
+        $categories = $this->entityManager
+            ->getRepository(Category::class)
+            ->findAll();
+
+        $post = $this->entityManager
+            ->getRepository(Post::class)
+            ->findOneBySlug($slug);
+
+        if (!$post) {
+            return $this->redirectToRoute('app_home');
+        }
+
+        dd($post);
+    }
 }

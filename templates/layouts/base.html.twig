@@ -62,7 +62,7 @@
             <div class="nav-scroller py-1 mb-2">
                 <nav class="nav d-flex justify-content-{% if categories|length > 0 %}between{% else %}center{% endif %}">
                     {% for category in categories %}
-                        <a class="p-2 text-muted" href="#">{{ category.name }}</a>
+                        <a class="p-2 text-muted" href="{{ path('app_category_details', {slug: category.slug}) }}">{{ category.name }}</a>
                     {% else %}
                         <p class="p-2 text-muted">Aucune catégorie n'a été créée.</p>
                     {% endfor %}
@@ -84,7 +84,7 @@
                                     <div class="carousel-caption text-left" style="background-color: rgba(0, 0, 0, .2); border-radius: 5px; padding: 10px;">
                                         <h1>{{ post.name }}</h1>
                                         <p class="small">Catégorie : {{ post.category.name }}</p>
-                                        <p><a class="btn btn-lg btn-primary" href="#">En savoir plus</a></p>
+                                        <p><a class="btn btn-lg btn-primary" href="{{ path('app_post_details', {slug: post.slug}) }}">En savoir plus</a></p>
                                     </div>
                                 </div>
                             </div>
