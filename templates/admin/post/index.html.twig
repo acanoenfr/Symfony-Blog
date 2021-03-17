@@ -1,15 +1,15 @@
 {% extends 'layouts/admin.html.twig' %}
 
-{% block title %}Catégories{% endblock %}
+{% block title %}Articles{% endblock %}
 
 {% block content %}
     <!-- DataTales Categories -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <a href="{{ path('admin_category_add') }}" class="btn btn-success float-right">
+            <a href="{{ path('admin_post_add') }}" class="btn btn-success float-right">
                 <i class="fas fa-plus"></i> Ajouter
             </a>
-            <h2 class="m-0 font-weight-bold text-primary">Catégories</h2>
+            <h2 class="m-0 font-weight-bold text-primary">Articles</h2>
         </div>
         <div class="card-body">
             {% for label, messages in app.flashes %}
@@ -22,29 +22,34 @@
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
-                        <tr>
-                            <th>Nom</th>
-                            <th>Articles liés</th>
-                            <th>Actions</th>
-                        </tr>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Image de couverture</th>
+                        <th>Catégorie</th>
+                        <th>Actions</th>
+                    </tr>
                     </thead>
                     <tfoot>
-                        <tr>
-                            <th>Nom</th>
-                            <th>Articles liés</th>
-                            <th>Actions</th>
-                        </tr>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Image de couverture</th>
+                        <th>Catégorie</th>
+                        <th>Actions</th>
+                    </tr>
                     </tfoot>
                     <tbody>
-                        {% for category in categories %}
+                        {% for post in posts %}
                             <tr>
-                                <td>{{ category.name }}</td>
-                                <td>{{ category.posts|length }}</td>
+                                <td>{{ post.name }}</td>
+                                <td width="300px">
+                                    <img src="/uploads/posts/{{ post.image }}" alt="{{ post.name }}" class="w-50">
+                                </td>
+                                <td>{{ post.category.name }}</td>
                                 <td>
-                                    <a href="{{ path('admin_category_edit', {id: category.id}) }}" class="btn btn-sm btn-warning">
+                                    <a href="{{ path('admin_post_edit', {id: post.id}) }}" class="btn btn-sm btn-warning">
                                         <i class="fas fa-pencil-alt"></i> Editer
                                     </a>
-                                    <a href="{{ path('admin_category_remove', {id: category.id}) }}" class="btn btn-sm btn-danger">
+                                    <a href="{{ path('admin_post_remove', {id: post.id}) }}" class="btn btn-sm btn-danger">
                                         <i class="fas fa-trash-alt"></i> Supprimer
                                     </a>
                                 </td>

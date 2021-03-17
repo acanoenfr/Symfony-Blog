@@ -28,7 +28,7 @@ class PostType extends AbstractType
             ])
             ->add('file', FileType::class, [
                 'label' => "Image",
-                'required' => true,
+                'required' => false,
                 'mapped' => false,
                 'constraints' => [
                     new File([

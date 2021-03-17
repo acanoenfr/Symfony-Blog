@@ -12,6 +12,13 @@
             <h2 class="m-0 font-weight-bold text-primary">Création catégorie</h2>
         </div>
         <div class="card-body">
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
             {{ form(form) }}
         </div>
     </div>
