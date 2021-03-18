@@ -1,0 +1,21 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Mot de passe oublié ?{% endblock %}
+
+{% block content %}
+    <div class="mb-4">
+        <div class="col-md-6 offset-md-3">
+
+            <h1 class="h3 mb-3 font-weight-normal text-center">Mot de passe oublié ?</h1>
+            <hr />
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            {{ form(form) }}
+        </div>
+    </div>
+{% endblock %}
