@@ -45,7 +45,7 @@ class PostType extends AbstractType
             ])
             ->add('content', TextareaType::class, [
                 'label' => "Contenu",
-                'required' => true,
+                'required' => false,
                 'attr' => [
                     'id' => 'mdContent',
                     'placeholder' => "Merci de saisir le contenu de l'article."
