@@ -10,6 +10,13 @@
         {% endif %}
         <hr />
         <p class="small">Bienvenue dans votre espace personnel. C'est ici que vous pourrez gérer vos informations personnelles.</p>
-        <a href="{{ path('account_update') }}">Modifier mes informations</a>
+        <div class="row mt-2">
+            <div class="col-md-12">
+                <div class="account-item text-center">
+                    <i class="fas fa-info fa-4x"></i><br />
+                    <a href="{{ path('account_update') }}">Modifier mes informations</a>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

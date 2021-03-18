@@ -124,3 +124,20 @@
     min-width: 100%;
     height: 32rem;
 }
+
+/* For account page */
+
+.account-item {
+    background-color: #f1f2f6;
+    padding: 70px;
+}
+
+.account-item a {
+    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.account-item a:hover {
+    text-decoration: none;
+}
