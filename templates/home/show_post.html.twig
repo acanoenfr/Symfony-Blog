@@ -3,13 +3,54 @@
 {% block title %}{{ post.name }}{% endblock %}
 
 {% block content %}
+    <div class="mb-2">
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+
     <div class="mb-4">
         <img src="/uploads/posts/{{ post.image }}" alt="{{ post.name }}" width="100%" height="100%" />
-        <h2>{{ post.name }}</h2>
+        <h2 class="mt-2">{{ post.name }}</h2>
         <p class="text-muted font-italic">Publié le {{ post.createdAt|date('d/m/Y') }} dans {{ post.category.name }}</p>
         <hr />
         <div>
             {{ post.content|markdown_to_html }}
         </div>
+
+        <hr />
+
+        <h2>Commentaires <small>({{ post.comments|length }})</small></h2>
+
+        {{ form_start(form) }}
+            <div class="row">
+                <div class="col-md-10">
+                    {{ form_row(form.content) }}
+                </div>
+                <div class="col-md-2">
+                    {{ form_row(form.submit) }}
+                </div>
+            </div>
+        {{ form_end(form) }}
+
+        {% for comment in post.comments|sort((a, b) => b.createdAt <=> a.createdAt) %}
+            <div class="card mt-2 mb-2">
+                <div class="card-header">
+                    {% if app.user == comment.user %}
+                        <a href="{{ path('comment_remove', {id: comment.id}) }}" class="float-right text-danger">Supprimer</a>
+                    {% endif %}
+                    Le {{ comment.createdAt|date('d/m/Y à H:i') }}, {{ comment.user.firstname }} a dit
+                </div>
+                <div class="card-body">
+                    {{ comment.content }}
+                </div>
+            </div>
+        {% else %}
+            <p class="text-muted font-italic">Aucun commentaire n'a été publié.</p>
+        {% endfor %}
     </div>
 {% endblock %}
