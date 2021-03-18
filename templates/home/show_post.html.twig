@@ -6,7 +6,7 @@
     <div class="mb-4">
         <img src="/uploads/posts/{{ post.image }}" alt="{{ post.name }}" width="100%" height="100%" />
         <h2>{{ post.name }}</h2>
-        <p class="text-muted lead">Publié le {{ post.createdAt|date('d/m/Y') }} dans {{ post.category.name }}</p>
+        <p class="text-muted font-italic">Publié le {{ post.createdAt|date('d/m/Y') }} dans {{ post.category.name }}</p>
         <hr />
         <div>
             {{ post.content|markdown_to_html }}
