@@ -24,7 +24,7 @@
                     <thead>
                     <tr>
                         <th>Nom</th>
-                        <th>Image de couverture</th>
+                        <th>Commentaires</th>
                         <th>Catégorie</th>
                         <th>Actions</th>
                     </tr>
@@ -32,17 +32,20 @@
                     <tfoot>
                     <tr>
                         <th>Nom</th>
-                        <th>Image de couverture</th>
-                        <th>Catégorie lié</th>
+                        <th>Commentaires</th>
+                        <th>Catégorie</th>
                         <th>Actions</th>
                     </tr>
                     </tfoot>
                     <tbody>
                         {% for post in posts %}
                             <tr>
-                                <td>{{ post.name }}</td>
                                 <td width="300px">
-                                    <img src="/uploads/posts/{{ post.image }}" alt="{{ post.name }}" class="w-50">
+                                    <img src="/uploads/posts/{{ post.image }}" alt="{{ post.name }}" class="w-50"><br />
+                                    {{ post.name }}
+                                </td>
+                                <td>
+                                    {{ post.comments|length }}
                                 </td>
                                 <td>{{ post.category.name }}</td>
                                 <td>
